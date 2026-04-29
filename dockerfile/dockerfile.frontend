@@ -11,7 +11,7 @@ COPY ./apps/frontend ./apps/frontend
 
 RUN bun install
 
-RUN bun run --cwd apps/frontend build
+RUN bun run build
 
 EXPOSE 5173
 
