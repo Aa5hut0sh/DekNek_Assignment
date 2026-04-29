@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getBlogById } from "../services/blog.services";
-import { ArrowLeft, Calendar, Globe, Lock, Loader2 } from "lucide-react";
+import { ArrowLeft, Globe, Lock, Loader2 } from "lucide-react";
 
 const BlogDetail = () => {
   const { id } = useParams();

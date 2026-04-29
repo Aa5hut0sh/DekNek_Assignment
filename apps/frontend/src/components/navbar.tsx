@@ -1,5 +1,5 @@
 import { useAuth } from "../store/hooks";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { LogOut, PenSquare, User, Menu, X } from "lucide-react";
 import { useState } from "react";
 
