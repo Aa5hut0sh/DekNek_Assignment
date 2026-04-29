@@ -1,135 +1,118 @@
-# Turborepo starter
+# Blogger
 
-This Turborepo starter is maintained by the Turborepo core team.
+A full-stack blogging platform where users can read, write, edit, and manage blog posts. Built as a monorepo using Turborepo with a React frontend and an Express/Bun backend.
 
-## Using this example
+**Live URL:** https://blogger.ashuttosh.me/
 
-Run the following command:
+**Test Account:**
+- Email: `test@blogger.com`
+- Password: `test@123`
 
-```sh
-npx create-turbo@latest
-```
+Or create your own account via the Sign Up page.
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Tech Stack
 
-### Apps and Packages
+**Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, React Router, Axios
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+**Backend:** Express.js, Bun runtime, Prisma ORM, PostgreSQL, JWT authentication, bcrypt
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+**Infrastructure:** Turborepo monorepo, Docker, Docker Compose, GitHub Actions CI/CD
 
-### Utilities
+---
 
-This Turborepo has some additional tools already setup for you:
+## Features
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Browse all published blog posts on the home page without an account
+- Sign up and log in with JWT-based authentication persisted in localStorage
+- Write, edit, and delete your own blog posts
+- Toggle posts between published (public) and draft (private) states
+- View individual blog posts with author information
+- Manage all your posts from a personal dashboard
 
-### Build
+---
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+.
+├── apps/
+│   ├── backend/          # Express API server
+│   └── frontend/         # React + Vite client
+└── packages/
+    ├── database/         # Prisma schema, migrations, and client
+    ├── eslint-config/    # Shared ESLint configurations
+    ├── typescript-config/ # Shared TypeScript configurations
+    └── ui/               # Shared React component library
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## API Endpoints
 
-```
-cd my-turborepo
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/auth/signup` | No | Register a new user |
+| POST | `/api/auth/login` | No | Login and receive a JWT |
+| GET | `/api/auth/me` | Yes | Get the current user |
+| GET | `/api/blog/bulk` | No | Get all published posts |
+| GET | `/api/blog/:id` | No | Get a single post by ID |
+| POST | `/api/blog/publish` | Yes | Create a new post |
+| PUT | `/api/blog/edit/:id` | Yes | Edit a post |
+| DELETE | `/api/blog/delete/:id` | Yes | Delete a post |
+| GET | `/api/blog/myblogs` | Yes | Get all posts by the logged-in user |
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+---
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+## Running Locally
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+**Prerequisites:** Node.js 18+, Bun, PostgreSQL database
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+1. Clone the repository and install dependencies:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```bash
+bun install
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+2. Set up environment variables. Copy the example files and fill in your values:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+cp .env.example .env
+cp apps/backend/.env.example apps/backend/.env
+cp packages/database/.env.example packages/database/.env
 ```
 
-## Useful Links
+3. Run database migrations:
 
-Learn more about the power of Turborepo:
+```bash
+cd packages/database
+bunx prisma migrate deploy
+bunx prisma generate
+```
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+4. Start the development servers:
+
+```bash
+bun run dev
+```
+
+The frontend runs on `http://localhost:5173` and the backend on `http://localhost:3000`.
+
+---
+
+## Running with Docker
+
+```bash
+docker-compose up --build
+```
+
+This starts both the backend (port 3000) and frontend (port 5173) in containers.
+
+---
+
+## Deployment
+
+The project uses GitHub Actions for CI/CD. On every push to `main`, Docker images are built and pushed to Docker Hub, then deployed to the production server via SSH.
+
+Required GitHub Secrets: `DOCKER_HUB_USERNAME`, `DOCKER_HUB_ACCESS_TOKEN`, `SERVER_HOST`, `SERVER_USERNAME`, `SERVER_SSH_KEY`, `DATABASE_URL`, `JWT_SECRET`, `PORT`
