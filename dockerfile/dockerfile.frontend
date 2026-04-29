@@ -11,6 +11,8 @@ COPY ./apps/frontend ./apps/frontend
 
 RUN bun install
 
+RUN bun run --cwd apps/frontend build
+
 EXPOSE 5173
 
 CMD ["bun", "run", "--cwd", "apps/frontend", "preview", "--host", "0.0.0.0", "--port", "5173"]
