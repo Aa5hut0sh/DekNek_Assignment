@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } finally {
       localStorage.removeItem("accessToken");
       setUser(null);
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   };
 
